@@ -1,5 +1,6 @@
 import Class from "../models/Class";
 import Student from "../models/Student";
+import Subject from "../models/Subject";
 import Teacher from "../models/Teacher";
 import TeachingAssignment from "../models/TeachingAssignment";
 import User from "../models/User";
@@ -26,4 +27,20 @@ Teacher.hasMany(TeachingAssignment, {
 
 TeachingAssignment.belongsTo(Teacher, {
   foreignKey: "teacherId",
+});
+
+Class.hasMany(TeachingAssignment, {
+  foreignKey: "classId",
+});
+
+TeachingAssignment.belongsTo(Class, {
+  foreignKey: "classId",
+});
+
+Subject.hasMany(TeachingAssignment, {
+  foreignKey: "subjectId",
+});
+
+TeachingAssignment.belongsTo(Subject, {
+  foreignKey: "subjectId",
 });
