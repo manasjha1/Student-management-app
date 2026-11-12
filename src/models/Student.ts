@@ -41,7 +41,7 @@ const Student = sequelize.define(
       allowNull: false,
       unique: true,
       references: {
-        model: "User",
+        model: "users",
         key: "id",
       },
     },
