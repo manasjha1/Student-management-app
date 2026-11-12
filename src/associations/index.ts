@@ -1,46 +1,88 @@
 import Class from "../models/Class";
+import Enrollment from "../models/Enrollment";
 import Student from "../models/Student";
 import Subject from "../models/Subject";
 import Teacher from "../models/Teacher";
 import TeachingAssignment from "../models/TeachingAssignment";
 import User from "../models/User";
 
-User.hasOne(Teacher, {
-  foreignKey: "userId",
-});
+const Associations = () => {
+  // User Teacher
+  User.hasOne(Teacher, {
+    foreignKey: "userId",
+    as: "teacherProfile",
+  });
 
-Teacher.belongsTo(User, {
-  foreignKey: "userId",
-});
+  Teacher.belongsTo(User, {
+    foreignKey: "userId",
+    as: "user",
+  });
 
-User.hasOne(Student, {
-  foreignKey: "userId",
-});
+  // User Student
+  User.hasOne(Student, {
+    foreignKey: "userId",
+    as: "studentProfile",
+  });
 
-Student.belongsTo(User, {
-  foreignKey: "userId",
-});
+  Student.belongsTo(User, {
+    foreignKey: "userId",
+    as: "user",
+  });
 
-Teacher.hasMany(TeachingAssignment, {
-  foreignKey: "teacherId",
-});
+  // Teacher Assignment
+  Teacher.hasMany(TeachingAssignment, {
+    foreignKey: "teacherId",
+    as: "teachingAssignments",
+  });
 
-TeachingAssignment.belongsTo(Teacher, {
-  foreignKey: "teacherId",
-});
+  TeachingAssignment.belongsTo(Teacher, {
+    foreignKey: "teacherId",
+    as: "teacher",
+  });
 
-Class.hasMany(TeachingAssignment, {
-  foreignKey: "classId",
-});
+  // Class Assignment
+  Class.hasMany(TeachingAssignment, {
+    foreignKey: "classId",
+    as: "teachingAssignments",
+  });
 
-TeachingAssignment.belongsTo(Class, {
-  foreignKey: "classId",
-});
+  TeachingAssignment.belongsTo(Class, {
+    foreignKey: "classId",
+    as: "class",
+  });
 
-Subject.hasMany(TeachingAssignment, {
-  foreignKey: "subjectId",
-});
+  // Subject Assignment
+  Subject.hasMany(TeachingAssignment, {
+    foreignKey: "subjectId",
+    as: "teachingAssignments",
+  });
 
-TeachingAssignment.belongsTo(Subject, {
-  foreignKey: "subjectId",
-});
+  TeachingAssignment.belongsTo(Subject, {
+    foreignKey: "subjectId",
+    as: "subject",
+  });
+
+  // Student Enrollment
+  Student.hasMany(Enrollment, {
+    foreignKey: "studentId",
+    as: "enrollments",
+  });
+
+  Enrollment.belongsTo(Student, {
+    foreignKey: "studentId",
+    as: "student",
+  });
+
+  // Class enrollment
+  Class.hasMany(Enrollment, {
+    foreignKey: "classId",
+    as: "enrollments",
+  });
+
+  Enrollment.belongsTo(Class, {
+    foreignKey: "classId",
+    as: "class",
+  });
+};
+
+export default Associations;
